@@ -1,0 +1,19 @@
+databases:
+  - name: bookshelf-db
+    databaseName: bookshelf_db
+    user: bookshelf_user
+
+services:
+  - type: web
+    name: bookshelf-api
+    runtime: docker
+    plan: free
+    dockerfilePath: ./Dockerfile
+    autoDeploy: true
+    envVars:
+      - key: ASPNETCORE_ENVIRONMENT
+        value: Production
+      - key: DATABASE_URL
+        fromDatabase:
+          name: bookshelf-db
+          property: connectionString
